@@ -1,6 +1,5 @@
 package net.tickmc.megizen.bukkit.commands;
 
-import com.denizenscript.denizen.objects.EntityTag;
 import com.denizenscript.denizencore.objects.core.ElementTag;
 import com.denizenscript.denizencore.scripts.ScriptEntry;
 import com.denizenscript.denizencore.scripts.commands.AbstractCommand;
@@ -13,7 +12,6 @@ import com.ticxo.modelengine.api.generator.blueprint.ModelBlueprint;
 import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
 import net.tickmc.megizen.bukkit.objects.MegModeledEntityTag;
-import org.bukkit.entity.Entity;
 
 public class MegModelCommand extends AbstractCommand {
 
