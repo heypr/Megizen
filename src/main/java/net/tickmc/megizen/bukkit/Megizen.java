@@ -5,6 +5,7 @@ import com.denizenscript.denizencore.DenizenCore;
 import com.denizenscript.denizencore.objects.ObjectFetcher;
 import com.denizenscript.denizencore.utilities.debugging.Debug;
 import net.tickmc.megizen.bukkit.commands.MegModelCommand;
+import net.tickmc.megizen.bukkit.commands.MegMountCommand;
 import net.tickmc.megizen.bukkit.commands.MegStateCommand;
 import net.tickmc.megizen.bukkit.objects.MegActiveModelTag;
 import net.tickmc.megizen.bukkit.objects.MegBoneTag;
@@ -29,6 +30,7 @@ public class Megizen extends JavaPlugin {
         MegizenEntityTagExtensions.register();
         DenizenCore.commandRegistry.registerCommand(MegModelCommand.class);
         DenizenCore.commandRegistry.registerCommand(MegStateCommand.class);
+        DenizenCore.commandRegistry.registerCommand(MegMountCommand.class);
 
         Debug.log("Megizen loaded!");
     }

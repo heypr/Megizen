@@ -8,7 +8,6 @@ import com.denizenscript.denizencore.scripts.commands.generator.ArgName;
 import com.denizenscript.denizencore.scripts.commands.generator.ArgPrefixed;
 import com.denizenscript.denizencore.utilities.debugging.Debug;
 import com.ticxo.modelengine.api.model.ActiveModel;
-import com.ticxo.modelengine.api.model.bone.manager.MountManager;
 import com.ticxo.modelengine.api.mount.controller.MountControllerTypes;
 import net.tickmc.megizen.bukkit.objects.MegActiveModelTag;
 
@@ -50,9 +49,13 @@ public class MegMountCommand extends AbstractCommand {
         }
         if (string.equalsIgnoreCase("driver")) {
             activeModel.getMountManager().ifPresent(mountManager -> {
+                if (mountManager.getDriver() != null) {
+                    mountManager.dismountDriver();
+                }
                 mountManager.mountDriver(entity.entity, MountControllerTypes.WALKING);
             });
-        } else {
+        }
+        else if (string.equalsIgnoreCase("passenger")){
             activeModel.getMountManager().ifPresent(mountManager -> {
                 mountManager.mountPassenger("seat", entity.entity, MountControllerTypes.WALKING);
             });
