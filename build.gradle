@@ -52,7 +52,6 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 processResources {
     filesMatching("plugin.yml") {
         expand "BUILD_NUMBER": System.getenv("BUILD_NUMBER").toString()
-        expand "BUILD_CLASS": "DEV"
     }
 }
 
