@@ -4,6 +4,7 @@ import com.denizenscript.denizen.objects.EntityTag;
 import com.denizenscript.denizencore.scripts.ScriptEntry;
 import com.denizenscript.denizencore.scripts.commands.AbstractCommand;
 import com.denizenscript.denizencore.scripts.commands.generator.ArgDefaultNull;
+import com.denizenscript.denizencore.scripts.commands.generator.ArgDefaultText;
 import com.denizenscript.denizencore.scripts.commands.generator.ArgName;
 import com.denizenscript.denizencore.scripts.commands.generator.ArgPrefixed;
 import com.denizenscript.denizencore.utilities.debugging.Debug;
@@ -14,13 +15,13 @@ import net.tickmc.megizen.bukkit.objects.MegActiveModelTag;
 public class MegMountCommand extends AbstractCommand {
     public MegMountCommand() {
         setName("megmount");
-        setSyntax("megmount [entity:<entity>] [model:<active_model>] [driver/passenger]");
+        setSyntax("megmount [entity:<entity>] [active_model:<active_model>] [type:driver/passenger]");
         autoCompile();
     }
 
     // <--[command]
     // @Name MegState
-    // @Syntax megmount [entity:<entity>] [model:<active_model>] [driver/passenger]
+    // @Syntax megmount [entity:<entity>] [active_model:<active_model>] [type:driver/passenger]
     // @Required 3
     // @Short Mounts the given entity on the given modeled entity, either as a passenger or the driver.
     // @Group Megizen
@@ -31,9 +32,9 @@ public class MegMountCommand extends AbstractCommand {
     // -->
 
     public static void autoExecute(ScriptEntry scriptEntry,
-                                   @ArgName("entity") @ArgPrefixed @ArgDefaultNull EntityTag entity,
-                                   @ArgName("model") @ArgPrefixed MegActiveModelTag model,
-                                   @ArgName("driver/passenger") @ArgPrefixed String string) {
+                                   @ArgName("entity") @ArgPrefixed EntityTag entity,
+                                   @ArgName("active_model") @ArgPrefixed MegActiveModelTag model,
+                                   @ArgName("type") @ArgPrefixed String string) {
         ActiveModel activeModel = model.getActiveModel();
         if (entity == null) {
             Debug.echoError("The 'entity' argument is required to mount an entity.");
