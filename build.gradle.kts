@@ -45,7 +45,7 @@ dependencies {
 }
 
 group = "net.tickmc"
-version = "2.1.0"
+version = "0.1.0-" + System.getenv("BUILD_NUMBER").toString()
 description = "Megizen"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
@@ -65,9 +65,6 @@ tasks.withType<Javadoc>() {
 
 tasks {
     runServer {
-        // Configure the Minecraft version for our task.
-        // This is the only required configuration besides applying the plugin.
-        // Your plugin's jar (or shadowJar if present) will be used automatically.
         minecraftVersion("1.20.4")
     }
 }
