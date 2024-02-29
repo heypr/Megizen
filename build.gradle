@@ -3,9 +3,9 @@
  */
 
 plugins {
-    `java-library`
-    `maven-publish`
-    id("xyz.jpenilla.run-paper") version "2.2.2"
+    id 'java-library'
+    id 'maven-publish'
+    id 'xyz.jpenilla.run-paper' version "2.2.2"
 }
 
 repositories {
@@ -37,11 +37,11 @@ repositories {
 }
 
 dependencies {
-    implementation("org.spigotmc:spigot-api:${project.properties["craftbukkit.version"]}")
-    implementation("com.denizenscript:denizen:${project.properties["denizen.version"]}")
-    implementation("io.netty:netty-all:4.1.86.Final")
-    implementation("me.clip:placeholderapi:2.10.0")
-    implementation("com.ticxo.modelengine:ModelEngine:${project.properties["modelengine.version"]}")
+    implementation "org.spigotmc:spigot-api:${project.properties["craftbukkit.version"]}"
+    implementation "com.denizenscript:denizen:${project.properties["denizen.version"]}"
+    implementation "io.netty:netty-all:4.1.86.Final"
+    implementation "me.clip:placeholderapi:2.10.0"
+    implementation "com.ticxo.modelengine:ModelEngine:${project.properties["modelengine.version"]}"
 }
 
 group = "net.tickmc"
@@ -49,18 +49,11 @@ version = "0.1.0-" + System.getenv("BUILD_NUMBER").toString()
 description = "Megizen"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-publishing {
-    publications.create<MavenPublication>("maven") {
-        from(components["java"])
+processResources {
+    filesMatching("plugin.yml") {
+        expand "BUILD_NUMBER": System.getenv("BUILD_NUMBER").toString()
+        expand "BUILD_CLASS": "DEV"
     }
-}
-
-tasks.withType<JavaCompile>() {
-    options.encoding = "UTF-8"
-}
-
-tasks.withType<Javadoc>() {
-    options.encoding = "UTF-8"
 }
 
 tasks {
