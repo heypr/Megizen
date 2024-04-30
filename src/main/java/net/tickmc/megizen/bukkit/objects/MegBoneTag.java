@@ -6,10 +6,7 @@ import com.denizenscript.denizencore.objects.Adjustable;
 import com.denizenscript.denizencore.objects.Fetchable;
 import com.denizenscript.denizencore.objects.Mechanism;
 import com.denizenscript.denizencore.objects.ObjectTag;
-import com.denizenscript.denizencore.objects.core.ColorTag;
-import com.denizenscript.denizencore.objects.core.ElementTag;
-import com.denizenscript.denizencore.objects.core.ListTag;
-import com.denizenscript.denizencore.objects.core.MapTag;
+import com.denizenscript.denizencore.objects.core.*;
 import com.denizenscript.denizencore.tags.Attribute;
 import com.denizenscript.denizencore.tags.ObjectTagProcessor;
 import com.denizenscript.denizencore.tags.TagContext;
@@ -24,6 +21,8 @@ import net.tickmc.megizen.bukkit.Megizen;
 import org.bukkit.Color;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.util.Vector;
+import org.joml.Quaternionf;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,6 +202,46 @@ public class MegBoneTag implements ObjectTag, Adjustable {
         // -->
         tagProcessor.registerTag(LocationTag.class, "location", (attribute, object) -> {
             return new LocationTag(object.getBone().getLocation());
+        });
+
+        // <--[tag]
+        // @attribute <MegBoneTag.global_scale>
+        // @returns LocationTag
+        // @description
+        // Returns the global scale of the bone.
+        // -->
+        tagProcessor.registerTag(LocationTag.class, "global_scale", (attribute, object) -> {
+            return new LocationTag(Vector.fromJOML(object.getBone().getGlobalScale()));
+        });
+
+        // <--[tag]
+        // @attribute <MegBoneTag.global_left_rotation>
+        // @returns QuaternionTag
+        // @description
+        // Returns the global left rotation of the bone.
+        // -->
+        tagProcessor.registerTag(QuaternionTag.class, "global_left_rotation", (attribute, object) -> {
+            Quaternionf quaternion = object.getBone().getGlobalLeftRotation();
+            float x = quaternion.x;
+            float y = quaternion.y;
+            float z = quaternion.z;
+            float w = quaternion.w;
+            return new QuaternionTag(x,y,z,w);
+        });
+
+        // <--[tag]
+        // @attribute <MegBoneTag.global_right_rotation>
+        // @returns QuaternionTag
+        // @description
+        // Returns the global right rotation of the bone.
+        // -->
+        tagProcessor.registerTag(QuaternionTag.class, "global_right_rotation", (attribute, object) -> {
+            Quaternionf quaternion = object.getBone().getGlobalRightRotation();
+            float x = quaternion.x;
+            float y = quaternion.y;
+            float z = quaternion.z;
+            float w = quaternion.w;
+            return new QuaternionTag(x,y,z,w);
         });
 
         // <--[tag]
