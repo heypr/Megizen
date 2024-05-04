@@ -2,10 +2,13 @@ package net.tickmc.megizen.bukkit;
 
 import com.denizenscript.denizen.Denizen;
 import com.denizenscript.denizencore.DenizenCore;
+import com.denizenscript.denizencore.events.ScriptEvent;
 import com.denizenscript.denizencore.objects.ObjectFetcher;
 import com.denizenscript.denizencore.utilities.debugging.Debug;
 import net.tickmc.megizen.bukkit.commands.MegModelCommand;
+import net.tickmc.megizen.bukkit.commands.MegMountCommand;
 import net.tickmc.megizen.bukkit.commands.MegStateCommand;
+import net.tickmc.megizen.bukkit.events.*;
 import net.tickmc.megizen.bukkit.objects.MegActiveModelTag;
 import net.tickmc.megizen.bukkit.objects.MegBoneTag;
 import net.tickmc.megizen.bukkit.objects.MegModeledEntityTag;
@@ -24,13 +27,20 @@ public class Megizen extends JavaPlugin {
         instance = this;
 
         // register stuff
+        DenizenCore.commandRegistry.registerCommand(MegModelCommand.class);
+        DenizenCore.commandRegistry.registerCommand(MegMountCommand.class);
+        DenizenCore.commandRegistry.registerCommand(MegStateCommand.class);
+        MegizenEntityTagExtensions.register();
+        MegizenPlayerTagExtensions.register();
         ObjectFetcher.registerWithObjectFetcher(MegModeledEntityTag.class, MegModeledEntityTag.tagProcessor);
         ObjectFetcher.registerWithObjectFetcher(MegActiveModelTag.class, MegActiveModelTag.tagProcessor);
         ObjectFetcher.registerWithObjectFetcher(MegBoneTag.class, MegBoneTag.tagProcessor);
-        MegizenEntityTagExtensions.register();
-        MegizenPlayerTagExtensions.register();
-        DenizenCore.commandRegistry.registerCommand(MegModelCommand.class);
-        DenizenCore.commandRegistry.registerCommand(MegStateCommand.class);
+        ScriptEvent.registerScriptEvent(AddModelScriptEvent.class);
+        ScriptEvent.registerScriptEvent(BaseEntityInteractScriptEvent.class);
+        ScriptEvent.registerScriptEvent(ModelDismountScriptEvent.class);
+        ScriptEvent.registerScriptEvent(ModelMountScriptEvent.class);
+        ScriptEvent.registerScriptEvent(ModelRegistrationScriptEvent.class);
+        ScriptEvent.registerScriptEvent(RemoveModelScriptEvent.class);
 
         Debug.log("Megizen loaded!");
     }
