@@ -15,7 +15,10 @@ import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
 import com.ticxo.modelengine.api.model.bone.ModelBone;
+import com.ticxo.modelengine.api.model.bone.behavior.BoneBehavior;
+import com.ticxo.modelengine.api.model.bone.type.Mount;
 import org.bukkit.Color;
+import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
 import java.util.Map;
@@ -309,6 +312,16 @@ public class MegActiveModelTag implements ObjectTag, Adjustable {
         });
 
         // <--[tag]
+        // @attribute <MegActiveModelTag.name>
+        // @returns ElementTag
+        // @description
+        // Returns the name of the active model.
+        // -->
+        tagProcessor.registerTag(ElementTag.class, "name", (attribute, object) -> {
+            return new ElementTag(object.getActiveModel().getBlueprint().getName());
+        });
+
+        // <--[tag]
         // @attribute <MegActiveModelTag.passengers>
         // @returns ListTag(EntityTag)
         // @description
@@ -343,6 +356,26 @@ public class MegActiveModelTag implements ObjectTag, Adjustable {
                 return null;
             }
             return new ListTag(object.getActiveModel().getMountManager().get().getSeats().keySet());
+        });
+
+        // <--[tag]
+        // @attribute <MegActiveModelTag.seat_map>
+        // @returns MapTag
+        // @description
+        // Returns a MapTag of entities on the active model, if any.
+        // Keys will be the bones entities are mounted on, while the values of those keys will be the entities themselves.
+        // Only returns the bones of entities who are mounted on the active model.
+        // -->
+        tagProcessor.registerTag(MapTag.class, "seat_map", (attribute, object) -> {
+            if (object.getActiveModel().getMountManager().isEmpty()) {
+                return null;
+            }
+            MapTag map = new MapTag();
+            for (Map.Entry<Entity, Mount> entry : object.getActiveModel().getMountManager().get().getPassengerSeatMap().entrySet()) {
+                String bone = ((BoneBehavior) entry.getValue()).getBone().getBoneId();
+                map.putObject(bone, new EntityTag(entry.getKey()));
+            }
+            return map;
         });
         
         // <--[mechanism]
