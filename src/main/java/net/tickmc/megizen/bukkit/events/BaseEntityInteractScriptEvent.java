@@ -18,6 +18,8 @@ public class BaseEntityInteractScriptEvent extends BukkitScriptEvent implements 
     // @Events
     // meg player interacts with <'model'>
     //
+    // @Switch action:<action> to only process the event if a specific action is performed.
+    //
     // @Group Player
     //
     // @Location true
@@ -39,6 +41,7 @@ public class BaseEntityInteractScriptEvent extends BukkitScriptEvent implements 
 
     public BaseEntityInteractScriptEvent() {
         registerCouldMatcher("meg player interacts with <'model'>");
+        registerSwitches("action");
     }
 
     BaseEntityInteractEvent event;
@@ -52,6 +55,9 @@ public class BaseEntityInteractScriptEvent extends BukkitScriptEvent implements 
             return false;
         }
         if (!path.eventArgLowerAt(4).equals("model") && !runGenericCheck(path.eventArgLowerAt(4), event.getModel().getBlueprint().getName())) {
+            return false;
+        }
+        if (!runGenericSwitchCheck(path, "action", event.getAction().name())) {
             return false;
         }
         return super.matches(path);
